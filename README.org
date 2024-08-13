@@ -1,7 +1,5 @@
 #+TITLE: perltidy.el
 
-* Perl::Tidy for Emacs
-
 This is a version of [[https://www.emacswiki.org/emacs/download/perltidy.el][perltidy.el]] that has been modified so that it can find the
 closest =.perltidyrc= to use (thanks [[https://github.com/zakame][Zakame]]), and the ability to format on-save for
 =perl-mode= and =cperl-mode=.
