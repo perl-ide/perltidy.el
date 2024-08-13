@@ -3,11 +3,12 @@
 ;; Copyright (C) 2007-2015 Free Software Foundation, Inc.
 ;;
 ;; Author: Ye Wenbin <wenbinye@gmail.com>
-;; Maintainer: Kirill Babikhin <mrakobes86reg@yandex.ru>
+;; Maintainer: Rawley Fowler <rawley@mollusc-labs.ca>
 ;; Created: 22 Dec 2007
-;; Version: 0.05
+;; Version: 0.06
+;;
 ;; Keywords: tools, convenience, languages
-
+;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
@@ -23,45 +24,15 @@
 ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 ;;; Commentary:
-
-;; As the PBP(Perl Best Practice) suggest, put this to your ~/.perltidyrc:
-;; ## .perltidyrc --- configuration for perltidy
-;; # Max line width is 78 cols
-;; -l=78
-;; # Indent level is 4 cols
-;; -i=4
-;; # Continuation indent is 4 cols
-;; -ci=4
-;; # Output to STDOUT
-;; -st
-;; # Errors to STDERR
-;; -se
-;; # Maximal vertical tightness
-;; -vt=2
-;; # No extra indentation for closing brackets
-;; -cti=0
-;; # Medium parenthesis tightness
-;; -pt=1
-;; # Medium brace tightness
-;; -bt=1
-;; # Medium square bracket tightness
-;; -sbt=1
-;; # Medium block brace tightness
-;; -bbt=1
-;; # No space before semicolons
-;; -nsfs
-;; # Don't outdent long quoted strings
-;; -nolq
-;; # Break before all operators
-;; -wbb="% + - * / x != == >= <= =~ !~ < > | & >= < = **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x="
-
-;; Put this file into your load-path and the following into your ~/.emacs:
-;;   (require 'perltidy)
+;;
+;; Lets you use Perl::Tidy on your Perl code from Emacs.
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
+(require 'perl-mode)
+(require 'cperl-mode)
+
+(defvar perltidy-on-save nil)
 
 (defgroup perltidy nil
   "Tidy perl code using perltidy"
@@ -146,7 +117,6 @@
 (defun perltidy-subroutine ()
   "Call perltidy for subroutine at point."
   (interactive)
-
   (save-excursion
     (let ((current-point (point))
           b e)
@@ -246,6 +216,15 @@ otherwise call perltidy for whole buffer."
                   (throw 'my-tag rcfile))
                  (t rc))))))
     rcfile))
+
+(add-hook 'before-save-hook
+          #'(lambda ()
+              (when (and
+                     (or
+                      (eq major-mode 'perl-mode)
+                      (eq major-mode 'cperl-mode))
+                     perltidy-on-save)
+                (perltidy-buffer))))
 
 (provide 'perltidy)
 ;;; perltidy.el ends here

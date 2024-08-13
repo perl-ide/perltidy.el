@@ -1,7 +1,15 @@
 #+TITLE: perltidy.el
 
-* Perl::Tidy for Emacs - Zakame's version
+* Perl::Tidy for Emacs
 
-This is a version of [[https://www.emacswiki.org/emacs/download/perltidy.el][perltidy.el]] that I modified so that it can find the
-closest =.perltidyrc= to use, even on non-remote buffers.  Originally this
-change was on [[https://github.com/zakame/emacs-pde/commit/f5fc74][my Emacs-PDE]].
+This is a version of [[https://www.emacswiki.org/emacs/download/perltidy.el][perltidy.el]] that has been modified so that it can find the
+closest =.perltidyrc= to use (thanks [[https://github.com/zakame][Zakame]]), and the ability to format on-save for
+=perl-mode= and =cperl-mode=.
+
+** Getting Started
+
+#+NAME:
+#+BEGIN_SRC elisp
+  (require 'perltidy) ; You have to put perltidy.el on your load-path
+  (setq perltidy-on-save t)
+#+END_SRC
