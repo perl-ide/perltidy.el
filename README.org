@@ -6,8 +6,22 @@ closest =.perltidyrc= to use (thanks [[https://github.com/zakame][Zakame]]), and
 
 ** Getting Started
 
+*** Install
+
+**** Straight.el
 #+NAME:
 #+BEGIN_SRC elisp
-  (require 'perltidy) ; You have to put perltidy.el on your load-path
-  (setq perltidy-on-save t)
+(straight-use-package
+ '(perltidy
+   :type git
+   :host github
+   :repo "perl-ide/perltidy.el"
+   :branch "master"))
+#+END_SRC
+
+*** Configure
+#+NAME:
+#+BEGIN_SRC elisp
+(require 'perltidy)
+(setq perltidy-on-save t)
 #+END_SRC
